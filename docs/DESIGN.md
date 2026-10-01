@@ -10,7 +10,7 @@ The assistant owns tool invocation and its adapter contract, but appliance-speci
 
 ## Streaming component interfaces
 
-The signatures below are **Python `typing.Protocol` pseudocode**, not a commitment to Python as the implementation language. `AsyncIterator` is the canonical contract. An offline engine yields one result or audio chunk from its adapter; this keeps SpeechTranscriber partial transcripts and chunked TTS output expressible without changing the interface later. Configuration is explicit per adapter and describes model, thresholds, sample format, device and runtime policy as applicable. Audio chunks carry sample rate, channel layout, timestamp, room/session identity and PCM payload; transcript updates carry `partial`/`final` status and turn identity. A final update alone may authorize side-effecting tools.
+The signatures below are **Python `typing.Protocol` pseudocode**, not a commitment to Python as the implementation language. `AsyncIterator` is the canonical contract. An offline engine yields one result or audio chunk from its adapter; this keeps SpeechTranscriber partial transcripts and chunked TTS output expressible without changing the interface later. Configuration is explicit per adapter and describes model, thresholds, sample format, device and runtime policy as applicable. Audio chunks carry sample rate, `device_id`, `room`, `channel_layout`, timestamp, optional direction of arrival (`doa`), routing session identity and PCM payload. XVF3800 has four microphones; the contract preserves multichannel capture without assuming a mono mix. Transcript updates carry `partial`/`final` status and turn identity. A final update alone may authorize side-effecting tools.
 
 ```python
 from typing import AsyncIterator, Protocol
@@ -35,7 +35,25 @@ class Tools(Protocol):
     def invoke(self, calls: AsyncIterator[ToolCall], config: ToolsConfig) -> AsyncIterator[ToolResult]: ...
 ```
 
-The orchestration layer joins each stream by turn/session and routes the matching room's output; it handles cancellation, interruption, backpressure and end-of-turn decisions rather than hiding these inside individual engines. `SpeechSegment` contains audio chunks and boundary events, and `ConversationTurn` contains final transcript plus speaker context. Cross-process adapters serialize these semantic events, not language-specific iterators. Transport adapters are compared below; none has been measured end to end on satellite hardware.
+The orchestration layer joins each stream by turn/session; it handles cancellation, interruption, backpressure and end-of-turn decisions rather than hiding these inside individual engines. `SpeechSegment` contains audio chunks and boundary events, and `ConversationTurn` contains final transcript plus speaker context. Cross-process adapters serialize these semantic events, not language-specific iterators. Transport adapters are compared below; none has been measured end to end on satellite hardware.
+
+## Multi-device routing
+
+`AudioChunk` preserves `device_id`, `room`, `channel_layout` and optional direction of arrival (`doa`). XVF3800 has four microphones; the input contract can preserve their channels instead of forcing a mono mix. STT, TTS and the other engine interfaces still process one stream at a time. A session is a **routing unit**, not necessarily one utterance:
+
+- `assistant_turn`: Route one assistant interaction to the selected room.
+- `broadcast`: Fan out speech to every eligible audio-out except the source room. The LLM can request this via a `broadcast(text, exclude_room)` tools adapter; authorization and destination policy remain outside the model.
+- `call`: Connect two rooms' audio-in and audio-out through the server (relaying their WebRTC tracks when using WebRTC). Tee each input to wake detection and STT while connected so the assistant remains available during the call.
+
+A separate **Router** owns simultaneous-device deduplication and destination selection, broadcast fan-out, and call wiring. To select one response room when multiple satellites hear an utterance, it compares timestamps, approximate transcripts, levels and available DoA; configuration defines its routing policies and device groups. These are design contracts, not implemented or measured behaviors. Hardware research must determine whether to mix the four microphone channels for STT or process channels separately, whether DoA helps speaker identification and room selection, and how call playback leaks into microphones.
+
+### Echo and howling
+
+**Intra-device echo**—a satellite hearing its own playback—is handled by XVF3800 hardware AEC. The board must feed the playback reference back to XVF3800; this is a board-design requirement, not an assumption that AEC works without wiring. Its effectiveness on the actual board remains unmeasured.
+
+**Inter-device echo**—device B hearing device A's playback—cannot be removed by A's AEC. It occurs when satellites sit together on a test bench and may occur between adjacent rooms after installation. The Router knows each output stream: it discards B's transcript when sufficiently similar to A's currently playing text, reduces or temporarily mutes wake sensitivity for other devices in the same group during playback, and detects delayed audio loops in `call` mode so it can attenuate one side. Similarity thresholds and loop detection require real-device measurement; suppressing wake must not silently disable the assistant outside the configured group.
+
+Configuration defines a **device group** as satellites sharing an acoustic space. Within a group, when one device plays, the others do not listen; deployment groups correspond to rooms, while a bench setup places every satellite in one group. This group policy complements—not replaces—the per-device playback reference for AEC.
 
 ## Configurable adapter inventory
 
