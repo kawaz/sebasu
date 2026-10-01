@@ -1,0 +1,51 @@
+{
+  "engine": "cpp",
+  "model_load_sec": 18.012,
+  "results": [
+    {
+      "sample": "A",
+      "audio_sec": 4.64,
+      "reference": "こんにちは。これはイロドリ TTS のローカル動作テストです。",
+      "transcript": "こんにちはこれは彩りTTSのローカル動作テストです",
+      "cer": 0.1481,
+      "inference_sec_median": 0.459,
+      "rtf": 0.099,
+      "individual_runs_sec": [
+        1.221,
+        0.459,
+        0.457
+      ],
+      "partials": []
+    },
+    {
+      "sample": "B",
+      "audio_sec": 3.472,
+      "reference": "明日の天気を教えて。リビングの電気を消して。",
+      "transcript": "明日の天気を教えてリビングの電気を消して",
+      "cer": 0.0,
+      "inference_sec_median": 0.459,
+      "rtf": 0.132,
+      "individual_runs_sec": [
+        0.456,
+        0.459,
+        0.461
+      ],
+      "partials": []
+    },
+    {
+      "sample": "C",
+      "audio_sec": 11.959,
+      "reference": "明日の天気を教えて。リビングの電気を消して。今朝は少し肌寒いですね。週末は家族と公園に出かける予定です。おすすめの映画も教えてください。",
+      "transcript": "明日の天気を教えて、リビングの電気を消して、今朝は少し肌寒いですね。週末は家族と公園に出かける予定です。",
+      "cer": 0.2381,
+      "inference_sec_median": 0.512,
+      "rtf": 0.043,
+      "individual_runs_sec": [
+        0.514,
+        0.512,
+        0.511
+      ],
+      "partials": []
+    }
+  ]
+}

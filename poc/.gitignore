@@ -1,0 +1,15 @@
+models/
+.models/
+out/
+audio/
+results/
+.venv/
+__pycache__/
+*.wav
+*.aiff
+*.gguf
+*.safetensors
+*.onnx
+*.pt
+*.bin
+*.ckpt
