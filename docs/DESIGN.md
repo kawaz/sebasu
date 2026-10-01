@@ -35,20 +35,104 @@ class Tools(Protocol):
     def invoke(self, calls: AsyncIterator[ToolCall], config: ToolsConfig) -> AsyncIterator[ToolResult]: ...
 ```
 
-The orchestration layer joins each stream by turn/session and routes the matching room's output; it handles cancellation, interruption, backpressure and end-of-turn decisions rather than hiding these inside individual engines. `SpeechSegment` contains audio chunks and boundary events, and `ConversationTurn` contains final transcript plus speaker context. Cross-process adapters serialize these semantic events, not language-specific iterators. The transport candidate is ESP-IDF `esp_webrtc` on the satellite with a Pion-family WebRTC endpoint on the server; this pairing is a research candidate, not a measured end-to-end implementation.
+The orchestration layer joins each stream by turn/session and routes the matching room's output; it handles cancellation, interruption, backpressure and end-of-turn decisions rather than hiding these inside individual engines. `SpeechSegment` contains audio chunks and boundary events, and `ConversationTurn` contains final transcript plus speaker context. Cross-process adapters serialize these semantic events, not language-specific iterators. Transport adapters are compared below; none has been measured end to end on satellite hardware.
 
-## Initial adapter candidates
+## Configurable adapter inventory
 
-| Interface | Candidate and evidence | Open constraint |
-| --- | --- | --- |
-| audio-in / audio-out | ESP32-S3 + XVF3800 satellite, WebRTC `esp_webrtc` ↔ Pion-family server | Hardware and full-duplex transport untested |
-| wake | openWakeWord on server; ESP-SR WakeNet or microWakeWord on satellite | English `hey_jarvis` score 0.999191 on synthetic audio; Japanese custom word and ESP hardware untested; bundled model licensing must be checked |
-| vad | Silero ONNX on server | Synthetic 8.475 s clip processed in 34–63 ms; endpoint notification in live audio unmeasured |
-| stt | Apple SpeechTranscriber; mlx-whisper large-v3-turbo as next Mac candidate | SpeechTranscriber final 0.043–0.126 s after synthetic clip end; MLX 0.358–0.472 s offline inference for tested clips; Apple implementation requires Swift/macOS |
-| speaker-id | SpeechBrain ECAPA | See [speaker-id PoC](../poc/speaker-id/README.md); household recordings and enrollment policy need validation |
-| llm | Qwen3-4B GGUF via llama.cpp | See [local LLM PoC](../poc/llm-local/README.md); tool authorization belongs outside the model |
-| tts | Kokoro for response speed; Irodori for voice quality | See [TTS PoCs](../poc/tts-more/README.md) and [Irodori comparison](../poc/tts-irodori-voicevox/README.md); full-file completion is not first audible sample |
-| tools | Local adapter registry and simulated tool calls in integration PoC | Appliance protocols and real weather integrations are not implemented |
+Each interface selects an adapter by configuration. Every candidate that ran in a PoC remains eligible regardless of relative performance; **none of the production adapters or configuration switches are implemented yet**. “PoC ran” is not “adapter implemented.” Unrun or blocked candidates remain visible as unsupported so their integration can be revisited. Measurements below are from an M1 Max Mac with synthetic inputs unless stated otherwise; detailed methods and licensing caveats are in the linked PoCs. Setup-time model downloads do not imply cloud use at runtime.
+
+### Audio input, output and transport
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| ESP32-S3 + XVF3800, `esp_webrtc` ↔ Pion WebRTC | Unsupported: no end-to-end hardware measurement | ESP32-S3 ↔ Mac/Linux, Go endpoint | Full-duplex Opus, I2S, AEC and room routing need hardware validation |
+| `esp_webrtc` ↔ aiortc | Unsupported: research only | ESP32-S3 ↔ Mac/Linux, Python endpoint | WebRTC interoperation and latency untested |
+| `esp_webrtc` ↔ str0m / webrtc-rs | Unsupported: research only | ESP32-S3 ↔ Mac/Linux, Rust endpoint | WebRTC interoperation and latency untested |
+| WebSocket PCM / Wyoming | Unsupported: comparison route only | ESP32 ↔ Mac/Linux | Protocol and security require design; Wyoming's raw TCP transport provides no authentication or encryption |
+| Mac microphone / `afplay` | PoC ran for silent microphone capture; playback code path exists but was not exercised in `--no-play` measurements; real speech and audible output were not assessed | macOS 26 | Microphone authorization required; Mac-local I/O is not a satellite transport |
+
+[Transport survey](./research/2026-09-30-stt-trends.md) · [integration PoC](../poc/e2e/README.md)
+
+### Wake detection
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| openWakeWord | PoC detected synthetic English `hey_jarvis`, peak score 0.999191 | macOS Apple Silicon, ONNX | Japanese custom model untrained; code Apache-2.0, bundled models CC BY-NC-SA 4.0 |
+| Porcupine | Unsupported in this PoC: existing Japanese model and historical CPU 2.4% / 32.5 MB observation, but no inference run here | Existing macOS assets; ESP32-S3 support unconfirmed | Account/AccessKey and commercial terms need verification; macOS model cannot be reused on ESP32 |
+| microWakeWord | Unsupported: no device/model test | ESP32-S3, ESPHome | Custom Japanese model requires training; code Apache-2.0 |
+| ESP-SR WakeNet | Unsupported: no device/model test | ESP32-S3 | Custom word supplied through Espressif; Japanese availability and model licensing unconfirmed |
+
+[Wake PoC](../poc/wake-vad/README.md)
+
+### Voice activity detection
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| Silero ONNX | PoC ran: 8.475 s synthetic clip processed in 34–63 ms (clean/noise) | Mac, ONNX Runtime | Offline boundary measurement, not live endpoint latency; verify model license before distribution |
+| WebRTC VAD | PoC ran: 1.0–1.3 ms; noisy first utterance split and initial false detection | Mac, Python `webrtcvad` | Extra hangover implemented by caller; `setuptools<81` required for tested package |
+| sherpa-onnx Silero VAD | PoC ran: 36.5–37.1 ms; noisy endpoint boundaries trailed reference | Mac, sherpa-onnx | Streaming endpoint latency not measured; verify bundled model terms |
+
+[VAD PoC](../poc/wake-vad/README.md)
+
+### Speech recognition
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| Apple SpeechTranscriber | PoC ran: partials during speech; synthetic final 0.043–0.126 s after audio end | macOS 26.5, Swift / Speech framework | Apple/macOS-specific; live household speech not evaluated |
+| mlx-whisper large-v3-turbo | PoC ran: three clips 0.358–0.472 s, offline final only | Apple Silicon / MLX | No partial results in tested API; check model terms |
+| faster-whisper large-v3-turbo int8 | PoC ran: 2.547–4.132 s, offline final only | Mac CPU; CPU path also relevant to Linux | Resource/latency profile differs from GPU; check model terms |
+| pywhispercpp kotoba-whisper-v2.0 q5_0 | PoC ran: 0.459–0.512 s, offline final only | Mac Metal | Long test omitted final sentence; check model terms |
+| sherpa-onnx ReazonSpeech offline zipformer | PoC ran: 0.083–0.199 s, offline final only | Mac CPU / ONNX | Long test omitted beginning; cannot load in streaming recognizer; check model terms |
+| sherpa-onnx multilingual streaming zipformer | PoC ran: 0.205–0.854 s and partial output | Mac CPU / ONNX | Japanese transcript accuracy poor on tested clips; distinct from ReazonSpeech model |
+
+[SpeechTranscriber PoC](../poc/speech-transcriber/README.md) · [STT comparison](../poc/stt-local/README.md)
+
+### Speaker identification
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| SpeechBrain ECAPA-TDNN | PoC ran: 18/18 synthetic speakers at 1 s; embedding median 0.020 s | Mac CPU, Python 3.11 | Human voices and enrollment not evaluated; code and model Apache-2.0 |
+| WeSpeaker ResNet34 / CAM++ | Unsupported: import fails because `s3prl` calls removed `torchaudio.set_audio_backend` | Tested Mac Python environment | Source Apache-2.0; dependency repair needed before model evaluation |
+| 3D-Speaker CAM++ | Unsupported: checkpoint and API not tested | Environment unverified | Source Apache-2.0; model conditions require verification |
+| pyannote embedding | Unsupported: gated checkpoint approval not obtained | Environment unverified | Code MIT; checkpoint use subject to model card |
+| NVIDIA NeMo TitaNet | Unsupported: dependencies and model not installed | macOS support unverified | Code Apache-2.0; model license separate |
+
+[Speaker identification PoC](../poc/speaker-id/README.md)
+
+### Language model
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| Qwen3-4B Q4_K_M via llama.cpp | PoC ran: 24/30, median first token 0.06 s, complete 0.43 s | M1 Max Metal | Apache-2.0; all Qwen variants mishandled unspecified rooms without external validation |
+| Qwen3-8B Q4_K_M via llama.cpp | PoC ran: 24/30, 0.09 / 0.67 s | M1 Max Metal | Apache-2.0; same room validation requirement |
+| Qwen3-4B 4bit via mlx-lm | PoC ran: 24/30, 0.55 / 0.86 s | Apple Silicon / MLX | Apache-2.0; same room validation requirement |
+| Qwen3-8B 4bit via mlx-lm | PoC ran: 21/30, 1.45 / 2.25 s | Apple Silicon / MLX | Apache-2.0; same room validation requirement |
+| Gemma 3 4B 4bit via mlx-lm | PoC ran, but 0/30 and 27/30 malformed JSON | Apple Silicon / MLX | Gemma Terms of Use; unsuitable for tested unconstrained prompt until integration improved |
+| Gemma 3 4B Q4_K_M via llama.cpp | PoC ran, but 0/30 and 27/30 malformed JSON | M1 Max Metal | Gemma Terms of Use; same prompt limitation |
+| Ollama / LM Studio / ELYZA / Swallow | Unsupported: not installed or measured | Unverified | Licensing and behavior depend on runtime/model |
+
+The 30-case score tests text-to-tool selection, not native function calling. Model output must not directly authorize an appliance action. [LLM PoC](../poc/llm-local/README.md)
+
+### Speech synthesis
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| Kokoro-82M `jf_alpha` | PoC ran: short/mid/long generation 0.301 / 0.537 / 1.505 s | M1 Max CPU | Model Apache-2.0; tested three inputs each yielded one chunk, not low-latency intra-sentence streaming |
+| Irodori-TTS v4.1 Small | PoC ran: 3.223 / 3.313 / 6.611 s resident generation | M1 Max MPS | Model/implementation licenses require separate verification; output measured through decode, not first sample |
+| VOICEVOX | PoC ran: newly started 0.25.1, short/mid/long full WAV 0.803 / 1.606 / 3.416 s; 0.25.2 and 0.26.0-preview.1 also measured | M1 Max macOS, resident server | Engine LGPL-3.0 and voice-specific terms; resident instance state strongly affected measurements |
+| Style-Bert-VITS2 JP-Extra | PoC ran: 0.573 / 1.038 / 2.065 s | M1 Max CPU | Implementation AGPL-3.0, tested voice CC-BY-SA-4.0 |
+| macOS `say -v Kyoko` | PoC ran: 1.124 / 1.102 / 1.248 s including CLI/file output | macOS | Bundled Apple software license; no Linux route |
+| pyopenjtalk | PoC ran: 0.032 / 0.090 / 0.217 s | M1 Max CPU | Code BSD-3-Clause; dictionaries/voices require separate license check |
+| Fish Speech S2 Pro | Unsupported: checkpoint/runtime not downloaded or executed | Mac MPS inference route unverified | Fish Audio Research License, commercial conditions require review |
+| Fun-CosyVoice3-0.5B-2512 | Unsupported: Torch imports on Mac, synthesis not attempted | Mac Python 3.10, final runtime unverified | Apache-2.0; dependency/checkpoint setup and streaming need testing |
+
+Measurements cover completed audio (or decode), **not first audible sample**, and are not a controlled speed ranking. [Additional TTS PoC](../poc/tts-more/README.md) · [Irodori and VOICEVOX comparison](../poc/tts-irodori-voicevox/README.md)
+
+### Tools
+
+| Adapter | Measurement / status | Environment | Constraints and licensing |
+| --- | --- | --- | --- |
+| Simulated `light.set`, `aircon.set`, `timer.set`, `weather.get`, `answer`, `ask` | PoC ran: text-selected calls, with mock appliance/weather execution in integration | Mac, local LLM pipeline | Appliance-specific protocols, external data, authorization and side-effect policy are not implemented; external weather sources would violate offline operation unless locally available |
 
 ## Measured integration snapshot
 
