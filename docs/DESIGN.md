@@ -8,7 +8,7 @@ Sebasu is a local-first voice assistant with ESP32-S3 + XVF3800 satellites in ea
 
 The assistant owns tool invocation and its adapter contract, but appliance-specific control protocols belong to tools adapters. Authentication, permission checks, and side-effect confirmation must occur at that boundary. The current stage is architecture and measured PoCs, not a working multi-room assistant.
 
-Room telemetry (temperature, humidity, CO2, illuminance, passive BLE scanning for presence and lost-item hints) is a separate component, `telemetry`, with responsibilities distinct from the voice pipeline. It shares only the per-room ESP32 hardware and the transport to the server; it is orthogonal to the audio interfaces such as `AudioChunk`. Telemetry owns collection, time-series storage, and queries; the assistant reads it only through tools (for example, replying in the occupied room or naming where a lost item was last seen). Details are in [telemetry-sensor-platform](./issue/telemetry-sensor-platform.md).
+Room telemetry (temperature, humidity, CO2, illuminance, passive BLE scanning for presence and lost-item hints) is a separate component, `telemetry`, with responsibilities distinct from the voice pipeline. It shares only the per-room ESP32 hardware and the transport to the server; it is orthogonal to the audio interfaces such as `AudioChunk`. Telemetry owns collection, time-series storage, and queries; the assistant reads it only through tools (for example, replying in the occupied room or naming where a lost item was last seen). Details are in [telemetry-sensor-platform](./issue/2026-10-01-telemetry-sensor-platform.md).
 
 ## Streaming component interfaces
 
