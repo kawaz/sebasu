@@ -78,7 +78,7 @@ Each interface selects an adapter by configuration. Every candidate that ran in 
 | Adapter | Measurement / status | Environment | Constraints and licensing |
 | --- | --- | --- | --- |
 | openWakeWord | PoC detected synthetic English `hey_jarvis`, peak score 0.999191 | macOS Apple Silicon, ONNX | Japanese custom model untrained; code Apache-2.0, bundled models CC BY-NC-SA 4.0 |
-| Porcupine | Unsupported in this PoC: existing Japanese model and historical CPU 2.4% / 32.5 MB observation, but no inference run here | Existing macOS assets; ESP32-S3 support unconfirmed | Account/AccessKey and commercial terms need verification; macOS model cannot be reused on ESP32 |
+| Porcupine | Unsupported in this PoC: historical CPU 2.4% / 32.5 MB observation with four built-in English keywords and a working Japanese custom keyword, but no inference run here | Existing macOS assets ([archive](../poc/porcupine/README.md)); ESP32-S3 support unconfirmed | Account/AccessKey and commercial terms need verification; macOS model cannot be reused on ESP32 |
 | microWakeWord | Unsupported: no device/model test | ESP32-S3, ESPHome | Custom Japanese model requires training; code Apache-2.0 |
 | ESP-SR WakeNet | Unsupported: no device/model test | ESP32-S3 | Custom word supplied through Espressif; Japanese availability and model licensing unconfirmed |
 

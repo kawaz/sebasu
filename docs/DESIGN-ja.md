@@ -76,7 +76,7 @@ class Tools(Protocol):
 | アダプタ | 実測・状態 | 動作環境 | 制約・ライセンス |
 | --- | --- | --- | --- |
 | openWakeWord | 合成英語 `hey_jarvis` を検出、最大スコア 0.999191 | macOS Apple Silicon、ONNX | 日本語独自モデルは未学習。コード Apache-2.0、配布モデル CC BY-NC-SA 4.0 |
-| Porcupine | 今回は未対応: 過去に日本語モデルと既製語で CPU 2.4% / 32.5 MB の記録があるが、この PoC では推論未実行 | 既存 macOS 資産。ESP32-S3 対応未確認 | アカウント・AccessKey、商用条件を要確認。Mac 用モデルは ESP32 へ流用不可 |
+| Porcupine | 今回は未対応: 過去に英語の既製語 4 つで CPU 2.4% / 32.5 MB の記録と、日本語カスタムワードの検出実績があるが、この PoC では推論未実行 | 既存 macOS 資産 ([保管物](../poc/porcupine/README.md))。ESP32-S3 対応未確認 | アカウント・AccessKey、商用条件を要確認。Mac 用モデルは ESP32 へ流用不可 |
 | microWakeWord | 未対応: 実機・モデルの試験なし | ESP32-S3、ESPHome | 日本語モデルを自前学習する必要。コード Apache-2.0 |
 | ESP-SR WakeNet | 未対応: 実機・モデルの試験なし | ESP32-S3 | 独自ワードは Espressif 経由。日本語対応・モデル利用条件は未確認 |
 

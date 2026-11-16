@@ -1,0 +1,19 @@
+[project]
+name = "porcupine-sandbox"
+version = "0.1.0"
+description = "Picovoice Porcupine testing environment"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pvporcupine>=3.0.0",
+    "pvrecorder>=1.2.0",
+    "numpy>=1.24.0",
+    "sounddevice>=0.4.6",
+    "python-dotenv>=1.0.0",
+    "psutil>=5.9.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "matplotlib>=3.7.0",
+]

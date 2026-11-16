@@ -15,6 +15,7 @@ sebasu/main/
     speech-transcriber/     # Apple STT
     stt-local/              # STT 候補比較
     wake-vad/               # ウェイクワードと VAD
+    porcupine/              # Porcupine のウェイクワードファイル・モデル・スクリプトの保管物
     speaker-id/             # 話者識別
     llm-local/              # ローカル LLM
     tts-more/               # TTS 候補比較
