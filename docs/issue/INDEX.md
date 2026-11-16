@@ -1,7 +1,5 @@
-# Issue INDEX
+このファイルは local-issue が各 issue の frontmatter から生成する。手で編集しない (編集しても次の生成で戻る)。
 
-active な issue の一覧。close 済みは archive/ にあり、ここには載せない。
-
-| date | category | status | slug | 概要 |
-|---|---|---|---|---|
-| 2026-10-01 | design | open | [telemetry-sensor-platform](./2026-10-01-telemetry-sensor-platform.md) | 各部屋の ESP32 を、音声衛星としてだけでなくセンサーデータをサーバに蓄積して活用する基盤にもしたい。 |
+| date | category | status | issue | title | blocked_by |
+|---|---|---|---|---|---|
+| 2026-10-01 | design | open | [telemetry-sensor-platform](./2026-10-01-telemetry-sensor-platform.md) | 各部屋センサーデータの蓄積基盤 (telemetry) |  |
