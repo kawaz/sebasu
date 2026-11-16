@@ -1,14 +1,14 @@
 version = 1
-revision = 2
+revision = 5
 requires-python = ">=3.11"
 
 [[package]]
 name = "certifi"
-version = "2025.6.15"
+version = "2026.10.18"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/73/f7/f14b46d4bcd21092d7d3ccef689615220d8a08fb25e564b65d20738e672e/certifi-2025.6.15.tar.gz", hash = "sha256:d747aa5a8b9bbbb1bb8c22bb13e22bd1f18e9796defa16bab421f7f7a317323b", size = 158753, upload-time = "2025-06-15T02:45:51.329Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7e/eb/a2aa1ac3ea30dd3f30ca57f40232138b6b0040719316ecb85daf61167771/certifi-2026.10.18.tar.gz", hash = "sha256:b9995d97b64d0431a5af837d8ca8cd6238104d1f319f04bd93ea43124d6c861e", size = 135227, upload-time = "2026-10-18T16:21:07.655Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/84/ae/320161bd181fc06471eed047ecce67b693fd7515b16d495d8932db763426/certifi-2025.6.15-py3-none-any.whl", hash = "sha256:2e0c7ce7cb5d8f8634ca55d2ba7e6ec2689a2fd6537d8dec1296a477a4910057", size = 157650, upload-time = "2025-06-15T02:45:49.977Z" },
+    { url = "https://files.pythonhosted.org/packages/08/ba/95dd616042484f7c83a06974388b37b837732740ee70bc5dc715b5fcd55a/certifi-2026.10.18-py3-none-any.whl", hash = "sha256:73191c47aaa79da394e8fee2dbc2ec827432cab56311122c9e47abf79e390f62", size = 134093, upload-time = "2026-10-18T16:21:06.276Z" },
 ]
 
 [[package]]
@@ -79,11 +79,11 @@ wheels = [
 
 [[package]]
 name = "idna"
-version = "3.10"
+version = "3.15"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9", size = 190490, upload-time = "2024-09-15T18:07:39.745Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/77/7b3966d0b9d1d31a36ddf1746926a11dface89a83409bf1483f0237aa758/idna-3.15.tar.gz", hash = "sha256:ca962446ea538f7092a95e057da437618e886f4d349216d2b1e294abfdb65fdc", size = 199245, upload-time = "2026-05-12T22:45:57.011Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3", size = 70442, upload-time = "2024-09-15T18:07:37.964Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/23/408243171aa9aaba178d3e2559159c24c1171a641aa83b67bdd3394ead8e/idna-3.15-py3-none-any.whl", hash = "sha256:048adeaf8c2d788c40fee287673ccaa74c24ffd8dcf09ffa555a2fbb59f10ac8", size = 72340, upload-time = "2026-05-12T22:45:55.733Z" },
 ]
 
 [[package]]
@@ -164,162 +164,163 @@ version = "11.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyobjc-core" },
-    { name = "pyobjc-framework-accessibility", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-accounts", marker = "platform_release >= '12.0'" },
+    { name = "pyobjc-framework-accessibility", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-accounts", marker = "platform_release >= '12'" },
     { name = "pyobjc-framework-addressbook" },
-    { name = "pyobjc-framework-adservices", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-adsupport", marker = "platform_release >= '18.0'" },
+    { name = "pyobjc-framework-adservices", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-adsupport", marker = "platform_release >= '18'" },
     { name = "pyobjc-framework-applescriptkit" },
-    { name = "pyobjc-framework-applescriptobjc", marker = "platform_release >= '10.0'" },
+    { name = "pyobjc-framework-applescriptobjc", marker = "platform_release >= '10'" },
     { name = "pyobjc-framework-applicationservices" },
-    { name = "pyobjc-framework-apptrackingtransparency", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-audiovideobridging", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-authenticationservices", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-automaticassessmentconfiguration", marker = "platform_release >= '19.0'" },
+    { name = "pyobjc-framework-apptrackingtransparency", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-audiovideobridging", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-authenticationservices", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-automaticassessmentconfiguration", marker = "platform_release >= '19'" },
     { name = "pyobjc-framework-automator" },
-    { name = "pyobjc-framework-avfoundation", marker = "platform_release >= '11.0'" },
-    { name = "pyobjc-framework-avkit", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-avrouting", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-backgroundassets", marker = "platform_release >= '22.0'" },
+    { name = "pyobjc-framework-avfoundation", marker = "platform_release >= '11'" },
+    { name = "pyobjc-framework-avkit", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-avrouting", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-backgroundassets", marker = "platform_release >= '22'" },
     { name = "pyobjc-framework-browserenginekit", marker = "platform_release >= '23.4'" },
-    { name = "pyobjc-framework-businesschat", marker = "platform_release >= '18.0'" },
-    { name = "pyobjc-framework-calendarstore", marker = "platform_release >= '9.0'" },
-    { name = "pyobjc-framework-callkit", marker = "platform_release >= '20.0'" },
+    { name = "pyobjc-framework-businesschat", marker = "platform_release >= '18'" },
+    { name = "pyobjc-framework-calendarstore", marker = "platform_release >= '9'" },
+    { name = "pyobjc-framework-callkit", marker = "platform_release >= '20'" },
     { name = "pyobjc-framework-carbon" },
     { name = "pyobjc-framework-cfnetwork" },
-    { name = "pyobjc-framework-cinematic", marker = "platform_release >= '23.0'" },
-    { name = "pyobjc-framework-classkit", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-cloudkit", marker = "platform_release >= '14.0'" },
+    { name = "pyobjc-framework-cinematic", marker = "platform_release >= '23'" },
+    { name = "pyobjc-framework-classkit", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-cloudkit", marker = "platform_release >= '14'" },
     { name = "pyobjc-framework-cocoa" },
-    { name = "pyobjc-framework-collaboration", marker = "platform_release >= '9.0'" },
-    { name = "pyobjc-framework-colorsync", marker = "platform_release >= '17.0'" },
-    { name = "pyobjc-framework-contacts", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-contactsui", marker = "platform_release >= '15.0'" },
+    { name = "pyobjc-framework-collaboration", marker = "platform_release >= '9'" },
+    { name = "pyobjc-framework-colorsync", marker = "platform_release >= '17'" },
+    { name = "pyobjc-framework-contacts", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-contactsui", marker = "platform_release >= '15'" },
     { name = "pyobjc-framework-coreaudio" },
     { name = "pyobjc-framework-coreaudiokit" },
-    { name = "pyobjc-framework-corebluetooth", marker = "platform_release >= '14.0'" },
+    { name = "pyobjc-framework-corebluetooth", marker = "platform_release >= '14'" },
     { name = "pyobjc-framework-coredata" },
-    { name = "pyobjc-framework-corehaptics", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-corelocation", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-coremedia", marker = "platform_release >= '11.0'" },
-    { name = "pyobjc-framework-coremediaio", marker = "platform_release >= '11.0'" },
+    { name = "pyobjc-framework-corehaptics", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-corelocation", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-coremedia", marker = "platform_release >= '11'" },
+    { name = "pyobjc-framework-coremediaio", marker = "platform_release >= '11'" },
     { name = "pyobjc-framework-coremidi" },
-    { name = "pyobjc-framework-coreml", marker = "platform_release >= '17.0'" },
-    { name = "pyobjc-framework-coremotion", marker = "platform_release >= '19.0'" },
+    { name = "pyobjc-framework-coreml", marker = "platform_release >= '17'" },
+    { name = "pyobjc-framework-coremotion", marker = "platform_release >= '19'" },
     { name = "pyobjc-framework-coreservices" },
-    { name = "pyobjc-framework-corespotlight", marker = "platform_release >= '17.0'" },
+    { name = "pyobjc-framework-corespotlight", marker = "platform_release >= '17'" },
     { name = "pyobjc-framework-coretext" },
-    { name = "pyobjc-framework-corewlan", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-cryptotokenkit", marker = "platform_release >= '14.0'" },
-    { name = "pyobjc-framework-datadetection", marker = "platform_release >= '21.0'" },
-    { name = "pyobjc-framework-devicecheck", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-devicediscoveryextension", marker = "platform_release >= '24.0'" },
-    { name = "pyobjc-framework-dictionaryservices", marker = "platform_release >= '9.0'" },
+    { name = "pyobjc-framework-corewlan", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-cryptotokenkit", marker = "platform_release >= '14'" },
+    { name = "pyobjc-framework-datadetection", marker = "platform_release >= '21'" },
+    { name = "pyobjc-framework-devicecheck", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-devicediscoveryextension", marker = "platform_release >= '24'" },
+    { name = "pyobjc-framework-dictionaryservices", marker = "platform_release >= '9'" },
     { name = "pyobjc-framework-discrecording" },
     { name = "pyobjc-framework-discrecordingui" },
     { name = "pyobjc-framework-diskarbitration" },
     { name = "pyobjc-framework-dvdplayback" },
-    { name = "pyobjc-framework-eventkit", marker = "platform_release >= '12.0'" },
+    { name = "pyobjc-framework-eventkit", marker = "platform_release >= '12'" },
     { name = "pyobjc-framework-exceptionhandling" },
-    { name = "pyobjc-framework-executionpolicy", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-extensionkit", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-externalaccessory", marker = "platform_release >= '17.0'" },
-    { name = "pyobjc-framework-fileprovider", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-fileproviderui", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-findersync", marker = "platform_release >= '14.0'" },
-    { name = "pyobjc-framework-fsevents", marker = "platform_release >= '9.0'" },
+    { name = "pyobjc-framework-executionpolicy", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-extensionkit", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-externalaccessory", marker = "platform_release >= '17'" },
+    { name = "pyobjc-framework-fileprovider", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-fileproviderui", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-findersync", marker = "platform_release >= '14'" },
+    { name = "pyobjc-framework-fsevents", marker = "platform_release >= '9'" },
     { name = "pyobjc-framework-fskit", marker = "platform_release >= '24.4'" },
-    { name = "pyobjc-framework-gamecenter", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-gamecontroller", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-gamekit", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-gameplaykit", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-healthkit", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-imagecapturecore", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-inputmethodkit", marker = "platform_release >= '9.0'" },
+    { name = "pyobjc-framework-gamecenter", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-gamecontroller", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-gamekit", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-gameplaykit", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-healthkit", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-imagecapturecore", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-inputmethodkit", marker = "platform_release >= '9'" },
     { name = "pyobjc-framework-installerplugins" },
-    { name = "pyobjc-framework-instantmessage", marker = "platform_release >= '9.0'" },
-    { name = "pyobjc-framework-intents", marker = "platform_release >= '16.0'" },
-    { name = "pyobjc-framework-intentsui", marker = "platform_release >= '21.0'" },
+    { name = "pyobjc-framework-instantmessage", marker = "platform_release >= '9'" },
+    { name = "pyobjc-framework-intents", marker = "platform_release >= '16'" },
+    { name = "pyobjc-framework-intentsui", marker = "platform_release >= '21'" },
     { name = "pyobjc-framework-iobluetooth" },
     { name = "pyobjc-framework-iobluetoothui" },
-    { name = "pyobjc-framework-iosurface", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-ituneslibrary", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-kernelmanagement", marker = "platform_release >= '20.0'" },
+    { name = "pyobjc-framework-iosurface", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-ituneslibrary", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-kernelmanagement", marker = "platform_release >= '20'" },
     { name = "pyobjc-framework-latentsemanticmapping" },
     { name = "pyobjc-framework-launchservices" },
-    { name = "pyobjc-framework-libdispatch", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-libxpc", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-linkpresentation", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-localauthentication", marker = "platform_release >= '14.0'" },
-    { name = "pyobjc-framework-localauthenticationembeddedui", marker = "platform_release >= '21.0'" },
-    { name = "pyobjc-framework-mailkit", marker = "platform_release >= '21.0'" },
-    { name = "pyobjc-framework-mapkit", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-mediaaccessibility", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-mediaextension", marker = "platform_release >= '24.0'" },
-    { name = "pyobjc-framework-medialibrary", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-mediaplayer", marker = "platform_release >= '16.0'" },
-    { name = "pyobjc-framework-mediatoolbox", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-metal", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-metalfx", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-metalkit", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-metalperformanceshaders", marker = "platform_release >= '17.0'" },
-    { name = "pyobjc-framework-metalperformanceshadersgraph", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-metrickit", marker = "platform_release >= '21.0'" },
-    { name = "pyobjc-framework-mlcompute", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-modelio", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-multipeerconnectivity", marker = "platform_release >= '14.0'" },
-    { name = "pyobjc-framework-naturallanguage", marker = "platform_release >= '18.0'" },
-    { name = "pyobjc-framework-netfs", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-network", marker = "platform_release >= '18.0'" },
-    { name = "pyobjc-framework-networkextension", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-notificationcenter", marker = "platform_release >= '14.0'" },
-    { name = "pyobjc-framework-opendirectory", marker = "platform_release >= '10.0'" },
+    { name = "pyobjc-framework-libdispatch", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-libxpc", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-linkpresentation", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-localauthentication", marker = "platform_release >= '14'" },
+    { name = "pyobjc-framework-localauthenticationembeddedui", marker = "platform_release >= '21'" },
+    { name = "pyobjc-framework-mailkit", marker = "platform_release >= '21'" },
+    { name = "pyobjc-framework-mapkit", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-mediaaccessibility", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-mediaextension", marker = "platform_release >= '24'" },
+    { name = "pyobjc-framework-medialibrary", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-mediaplayer", marker = "platform_release >= '16'" },
+    { name = "pyobjc-framework-mediatoolbox", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-metal", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-metalfx", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-metalkit", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-metalperformanceshaders", marker = "platform_release >= '17'" },
+    { name = "pyobjc-framework-metalperformanceshadersgraph", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-metrickit", marker = "platform_release >= '21'" },
+    { name = "pyobjc-framework-mlcompute", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-modelio", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-multipeerconnectivity", marker = "platform_release >= '14'" },
+    { name = "pyobjc-framework-naturallanguage", marker = "platform_release >= '18'" },
+    { name = "pyobjc-framework-netfs", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-network", marker = "platform_release >= '18'" },
+    { name = "pyobjc-framework-networkextension", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-notificationcenter", marker = "platform_release >= '14'" },
+    { name = "pyobjc-framework-opendirectory", marker = "platform_release >= '10'" },
     { name = "pyobjc-framework-osakit" },
-    { name = "pyobjc-framework-oslog", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-passkit", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-pencilkit", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-phase", marker = "platform_release >= '21.0'" },
-    { name = "pyobjc-framework-photos", marker = "platform_release >= '15.0'" },
-    { name = "pyobjc-framework-photosui", marker = "platform_release >= '15.0'" },
+    { name = "pyobjc-framework-oslog", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-passkit", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-pencilkit", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-phase", marker = "platform_release >= '21'" },
+    { name = "pyobjc-framework-photos", marker = "platform_release >= '15'" },
+    { name = "pyobjc-framework-photosui", marker = "platform_release >= '15'" },
     { name = "pyobjc-framework-preferencepanes" },
-    { name = "pyobjc-framework-pushkit", marker = "platform_release >= '19.0'" },
+    { name = "pyobjc-framework-pubsub", marker = "platform_release >= '9' and platform_release < '18'" },
+    { name = "pyobjc-framework-pushkit", marker = "platform_release >= '19'" },
     { name = "pyobjc-framework-quartz" },
-    { name = "pyobjc-framework-quicklookthumbnailing", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-replaykit", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-safariservices", marker = "platform_release >= '16.0'" },
-    { name = "pyobjc-framework-safetykit", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-scenekit", marker = "platform_release >= '11.0'" },
+    { name = "pyobjc-framework-quicklookthumbnailing", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-replaykit", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-safariservices", marker = "platform_release >= '16'" },
+    { name = "pyobjc-framework-safetykit", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-scenekit", marker = "platform_release >= '11'" },
     { name = "pyobjc-framework-screencapturekit", marker = "platform_release >= '21.4'" },
     { name = "pyobjc-framework-screensaver" },
-    { name = "pyobjc-framework-screentime", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-scriptingbridge", marker = "platform_release >= '9.0'" },
+    { name = "pyobjc-framework-screentime", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-scriptingbridge", marker = "platform_release >= '9'" },
     { name = "pyobjc-framework-searchkit" },
     { name = "pyobjc-framework-security" },
     { name = "pyobjc-framework-securityfoundation" },
     { name = "pyobjc-framework-securityinterface" },
     { name = "pyobjc-framework-securityui", marker = "platform_release >= '24.4'" },
-    { name = "pyobjc-framework-sensitivecontentanalysis", marker = "platform_release >= '23.0'" },
-    { name = "pyobjc-framework-servicemanagement", marker = "platform_release >= '10.0'" },
-    { name = "pyobjc-framework-sharedwithyou", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-sharedwithyoucore", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-shazamkit", marker = "platform_release >= '21.0'" },
-    { name = "pyobjc-framework-social", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-soundanalysis", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-speech", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-spritekit", marker = "platform_release >= '13.0'" },
-    { name = "pyobjc-framework-storekit", marker = "platform_release >= '11.0'" },
-    { name = "pyobjc-framework-symbols", marker = "platform_release >= '23.0'" },
+    { name = "pyobjc-framework-sensitivecontentanalysis", marker = "platform_release >= '23'" },
+    { name = "pyobjc-framework-servicemanagement", marker = "platform_release >= '10'" },
+    { name = "pyobjc-framework-sharedwithyou", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-sharedwithyoucore", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-shazamkit", marker = "platform_release >= '21'" },
+    { name = "pyobjc-framework-social", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-soundanalysis", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-speech", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-spritekit", marker = "platform_release >= '13'" },
+    { name = "pyobjc-framework-storekit", marker = "platform_release >= '11'" },
+    { name = "pyobjc-framework-symbols", marker = "platform_release >= '23'" },
     { name = "pyobjc-framework-syncservices" },
     { name = "pyobjc-framework-systemconfiguration" },
-    { name = "pyobjc-framework-systemextensions", marker = "platform_release >= '19.0'" },
-    { name = "pyobjc-framework-threadnetwork", marker = "platform_release >= '22.0'" },
-    { name = "pyobjc-framework-uniformtypeidentifiers", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-usernotifications", marker = "platform_release >= '18.0'" },
-    { name = "pyobjc-framework-usernotificationsui", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-videosubscriberaccount", marker = "platform_release >= '18.0'" },
-    { name = "pyobjc-framework-videotoolbox", marker = "platform_release >= '12.0'" },
-    { name = "pyobjc-framework-virtualization", marker = "platform_release >= '20.0'" },
-    { name = "pyobjc-framework-vision", marker = "platform_release >= '17.0'" },
+    { name = "pyobjc-framework-systemextensions", marker = "platform_release >= '19'" },
+    { name = "pyobjc-framework-threadnetwork", marker = "platform_release >= '22'" },
+    { name = "pyobjc-framework-uniformtypeidentifiers", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-usernotifications", marker = "platform_release >= '18'" },
+    { name = "pyobjc-framework-usernotificationsui", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-videosubscriberaccount", marker = "platform_release >= '18'" },
+    { name = "pyobjc-framework-videotoolbox", marker = "platform_release >= '12'" },
+    { name = "pyobjc-framework-virtualization", marker = "platform_release >= '20'" },
+    { name = "pyobjc-framework-vision", marker = "platform_release >= '17'" },
     { name = "pyobjc-framework-webkit" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/db/5e/16bc372806790d295c76b5c7851767cc9ee3787b3e581f5d7cc44158e4e0/pyobjc-11.1.tar.gz", hash = "sha256:a71b14389657811d658526ba4d5faba4ef7eadbddcf9fe8bf4fb3a6261effba3", size = 11161, upload-time = "2025-06-14T20:56:32.819Z" }
@@ -2256,6 +2257,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pyobjc-framework-pubsub"
+version = "11.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyobjc-core" },
+    { name = "pyobjc-framework-cocoa" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b5/74/640059089ae11564147a9594358956140ca5a3c9bec40e42ac9001685002/pyobjc_framework_pubsub-11.1.tar.gz", hash = "sha256:47221f63466c523516ab5d2297dd3c644d915a77ca1f1867b0055d735486f1f8", size = 16177, upload-time = "2025-06-14T20:58:15.014Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/27/da/b2d627cd6aecc057a9a69e4552999660a26c818e9d3461a0c49554e2af12/pyobjc_framework_pubsub-11.1-py2.py3-none-any.whl", hash = "sha256:cea6bd9e0af46f9ea1c8d002a92e462576dd5a772a7e0688d40c7903755af11f", size = 5176, upload-time = "2025-06-14T20:53:26.431Z" },
+]
+
+[[package]]
 name = "pyobjc-framework-pushkit"
 version = "11.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2957,7 +2971,7 @@ wheels = [
 
 [[package]]
 name = "requests"
-version = "2.32.4"
+version = "2.33.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
@@ -2965,9 +2979,9 @@ dependencies = [
     { name = "idna" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e1/0a/929373653770d8a0d7ea76c37de6e41f11eb07559b103b1c02cafb3f7cf8/requests-2.32.4.tar.gz", hash = "sha256:27d0316682c8a29834d3264820024b62a36942083d52caf2f14c0591336d3422", size = 135258, upload-time = "2025-06-09T16:43:07.34Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/34/64/8860370b167a9721e8956ae116825caff829224fbca0ca6e7bf8ddef8430/requests-2.33.0.tar.gz", hash = "sha256:c7ebc5e8b0f21837386ad0e1c8fe8b829fa5f544d8df3b2253bff14ef29d7652", size = 134232, upload-time = "2026-03-25T15:10:41.586Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7c/e4/56027c4a6b4ae70ca9de302488c5ca95ad4a39e190093d6c1a8ace08341b/requests-2.32.4-py3-none-any.whl", hash = "sha256:27babd3cda2a6d50b30443204ee89830707d396671944c998b5975b031ac2b2c", size = 64847, upload-time = "2025-06-09T16:43:05.728Z" },
+    { url = "https://files.pythonhosted.org/packages/56/5d/c814546c2333ceea4ba42262d8c4d55763003e767fa169adc693bd524478/requests-2.33.0-py3-none-any.whl", hash = "sha256:3324635456fa185245e24865e810cecec7b4caf933d7eb133dcde67d48cee69b", size = 65017, upload-time = "2026-03-25T15:10:40.382Z" },
 ]
 
 [[package]]
@@ -3003,9 +3017,9 @@ requires-dist = [
 
 [[package]]
 name = "urllib3"
-version = "2.5.0"
+version = "2.8.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/15/22/9ee70a2574a4f4599c47dd506532914ce044817c7752a79b6a51286319bc/urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760", size = 393185, upload-time = "2025-06-18T14:07:41.644Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz", hash = "sha256:63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63", size = 458972, upload-time = "2026-09-15T19:29:36.253Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/c2/fe1e52489ae3122415c51f387e221dd0773709bad6c6cdaa599e8a2c5185/urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc", size = 129795, upload-time = "2025-06-18T14:07:40.39Z" },
+    { url = "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl", hash = "sha256:0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3", size = 135717, upload-time = "2026-09-15T19:29:34.577Z" },
 ]
