@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""
+vsay2 - Simple TTS APIを使った音声合成コマンド
+使い方: vsay2 "こんにちは"
+"""
+import sys
+import requests
+import argparse
+import json
+
+API_URL = "http://localhost:8000"
+
+def speak(text, speaker=3, speed=1.2):
+    """Simple TTS APIで音声を再生"""
+    try:
+        response = requests.post(
+            f"{API_URL}/speak",
+            json={
+                "text": text,
+                "speaker": speaker,
+                "speed": speed,
+                "play": True
+            }
+        )
+        if response.status_code == 200:
+            result = response.json()
+            return True
+        else:
+            print(f"エラー: {response.status_code} - {response.text}", file=sys.stderr)
+            return False
+    except requests.exceptions.ConnectionError:
+        print("エラー: TTS APIサーバーが起動していません", file=sys.stderr)
+        print("起動: (cd .worktrees/feature-tts-comparison/sandbox/tts-comparison && uv run python tts_api_server.py)", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"エラー: {e}", file=sys.stderr)
+        sys.exit(1)
+
+def list_speakers():
+    """話者一覧を表示"""
+    try:
+        response = requests.get(f"{API_URL}/speakers")
+        if response.status_code == 200:
+            speakers = response.json()
+            print("利用可能な話者:")
+            for speaker in speakers:
+                print(f"\n{speaker['name']}:")
+                for style in speaker['styles']:
+                    print(f"  {style['id']}: {style['name']}")
+        else:
+            print(f"エラー: 話者一覧の取得に失敗しました", file=sys.stderr)
+    except requests.exceptions.ConnectionError:
+        print("エラー: TTS APIサーバーが起動していません", file=sys.stderr)
+        sys.exit(1)
+
+def main():
+    global API_URL
+    
+    parser = argparse.ArgumentParser(description='Simple TTS APIで音声合成')
+    parser.add_argument('text', nargs='*', help='読み上げるテキスト')
+    parser.add_argument('-s', '--speaker', type=int, default=3, help='話者ID (デフォルト: 3=ずんだもん)')
+    parser.add_argument('-r', '--rate', type=float, default=1.2, help='話速 (デフォルト: 1.2)')
+    parser.add_argument('-l', '--list', action='store_true', help='話者一覧を表示')
+    parser.add_argument('--api-url', default=API_URL, help='APIサーバーのURL')
+    
+    args = parser.parse_args()
+    
+    # APIのURLを更新
+    API_URL = args.api_url
+    
+    if args.list:
+        list_speakers()
+        return
+    
+    if not args.text:
+        # 標準入力から読む
+        text = sys.stdin.read().strip()
+    else:
+        text = ' '.join(args.text)
+    
+    if text:
+        speak(text, args.speaker, args.rate)
+
+if __name__ == "__main__":
+    main()

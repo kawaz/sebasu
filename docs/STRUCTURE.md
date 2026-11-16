@@ -19,6 +19,7 @@ sebasu/main/
     llm-local/              # ローカル LLM
     tts-more/               # TTS 候補比較
     tts-irodori-voicevox/   # Irodori と VOICEVOX 比較
+    voicevox-vsay/          # VOICEVOX 常駐と vsay CLI の保管物
     e2e/                    # 統合 PoC
 ```
 

@@ -67,7 +67,7 @@ wake → STT → TTS を通したエンドツーエンドのレイテンシは�
 - `sandbox/wake-whisper-continuous/`: Porcupine と Whisper を統合したもの。`multilingual_wake_detector.py` (言語ごとにインスタンスを分ける)、`porcupine_helper.py`、`event_driven_v3.py` / `multilevel_main.py`
   - `ppn/オッケーセバス_ja_mac_v3_0_0.ppn` (3.6KB、**mac 専用**)、`models/porcupine_params_ja.pv` (986KB、日本語モデル)
 - `sandbox/porcupine/`: `resource_monitor.py` (CPU とメモリの計測)、`test_multiple_patterns.py`、`SETUP.md`
-- `sandbox/tts-comparison/`: `vsay` CLI、`voicevox_manager.py`、`bench_tts.py`、優先度付きキューや環境音に合わせた音量調整をする API サーバの試作。`voicevox_engine-macos-arm64-0.25.1/` (2.0GB) が展開済みで、DR-001 によると `~/bin/vsay` からリンクされていて現役
+- `sandbox/tts-comparison/`: `vsay` CLI、`voicevox_manager.py`、`bench_tts.py`、優先度付きキューや環境音に合わせた音量調整をする API サーバの試作。スクリプトと知見文書、launchd 設定のテンプレは `poc/voicevox-vsay/` に写してある。エンジン本体は写していない (入れ直す手順は `poc/voicevox-vsay/README.md`)
 - `sandbox/whisper/`: `mic_transcribe_*.py` (VAD と多段認識)
 - `sandbox/openwakeword/`: `custom_threshold.py` (閾値をグラフで調整するツール)。検出そのものは動いていない
 - どれも uv プロジェクト (`pyproject.toml` と `uv.lock` あり)。今も動くかは未確認。Porcupine の AccessKey は `.mise.local.toml` などにあるとみられる (中身は見ていない)

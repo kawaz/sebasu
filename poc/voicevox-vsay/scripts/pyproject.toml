@@ -1,0 +1,12 @@
+[project]
+name = "tts-comparison"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pyaudio>=0.2.14",
+    "pyopenjtalk>=0.4.1",
+    "pyttsx3>=2.98",
+    "requests>=2.32.4",
+]

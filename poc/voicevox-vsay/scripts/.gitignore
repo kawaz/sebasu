@@ -1,0 +1,24 @@
+# VOICEVOXエンジン関連
+voicevox_engine/
+voicevox_engine-*/
+*.7z*
+VOICEVOX/
+
+# ログファイル
+*.log
+
+# 一時ファイル
+debug_output.wav
+tmp/
+cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# 仮想環境
+.venv/
+venv/
+env/

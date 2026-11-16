@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+"""
+vsay - 統合版音声合成コマンド
+サブコマンドで動作モードを切り替え
+"""
+import sys
+import argparse
+import subprocess
+import os
+
+# symlink経由でも正しく動くよう、実体のディレクトリを基準にする
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+
+SUBCOMMANDS = {'direct', 'api', 'server', 'engine', 'list'}
+
+def uv_run(*args):
+    """SCRIPT_DIRでuv run経由でスクリプトを実行"""
+    subprocess.run(['uv', 'run', 'python', *args], cwd=SCRIPT_DIR)
+
+def main():
+    # サブコマンド以外の引数が来たらデフォルト(direct)として扱う
+    if len(sys.argv) > 1 and sys.argv[1] not in SUBCOMMANDS | {'-h', '--help'}:
+        sys.argv.insert(1, 'direct')
+
+    parser = argparse.ArgumentParser(
+        description='VOICEVOX音声合成ツール',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+使用例:
+  vsay "こんにちは"              # テキスト読み上げ（デフォルト）
+  vsay --speaker 2 "四国めたんです"  # 話者変更
+  vsay --rate 1.5 "速く話します"     # 速度調整
+
+  vsay direct "こんにちは"       # 直接実行モード（明示的）
+  vsay list                      # 話者一覧
+  vsay engine status             # VOICEVOXエンジン状態確認
+"""
+    )
+
+    subparsers = parser.add_subparsers(dest='command')
+
+    # direct サブコマンド
+    direct_parser = subparsers.add_parser('direct', help='VOICEVOXを直接利用（デフォルト）')
+    direct_parser.add_argument('text', nargs='*', help='読み上げるテキスト')
+    direct_parser.add_argument('--speaker', type=int, default=3, help='話者ID (デフォルト: 3=ずんだもん)')
+    direct_parser.add_argument('--rate', type=float, default=1.2, help='話速 (デフォルト: 1.2)')
+    direct_parser.add_argument('--emphasis-moras', type=int, default=3, help='先頭強調モーラ数 (0で無効, デフォルト: 3)')
+    direct_parser.add_argument('--emphasis-pitch', type=float, default=0.1, help='先頭強調pitch加算 (デフォルト: 0.1)')
+    direct_parser.add_argument('--emphasis-length', type=float, default=1.3, help='先頭強調母音倍率 (デフォルト: 1.3)')
+
+    # api サブコマンド
+    api_parser = subparsers.add_parser('api', help='APIサーバー経由で実行')
+    api_parser.add_argument('text', nargs='*', help='読み上げるテキスト')
+    api_parser.add_argument('--speaker', type=int, default=3, help='話者ID')
+    api_parser.add_argument('--rate', type=float, default=1.2, help='話速')
+
+    # server サブコマンド
+    server_parser = subparsers.add_parser('server', help='APIサーバー管理')
+    server_parser.add_argument('action', choices=['start', 'stop', 'status'])
+
+    # engine サブコマンド
+    engine_parser = subparsers.add_parser('engine', help='VOICEVOXエンジン管理')
+    engine_parser.add_argument('action', choices=['start', 'stop', 'status', 'setup'])
+
+    # list サブコマンド
+    subparsers.add_parser('list', help='話者一覧を表示')
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        return
+
+    if args.command == 'direct':
+        cmd = ['vsay_direct.py']
+        if args.speaker != 3:
+            cmd += ['--speaker', str(args.speaker)]
+        if args.rate != 1.2:
+            cmd += ['--rate', str(args.rate)]
+        if args.emphasis_moras != 3:
+            cmd += ['--emphasis-moras', str(args.emphasis_moras)]
+        if args.emphasis_pitch != 0.1:
+            cmd += ['--emphasis-pitch', str(args.emphasis_pitch)]
+        if args.emphasis_length != 1.3:
+            cmd += ['--emphasis-length', str(args.emphasis_length)]
+        if args.text:
+            cmd += args.text
+        uv_run(*cmd)
+
+    elif args.command == 'api':
+        cmd = ['vsay_api.py']
+        if args.speaker != 3:
+            cmd += ['--speaker', str(args.speaker)]
+        if args.rate != 1.2:
+            cmd += ['--rate', str(args.rate)]
+        if args.text:
+            cmd += args.text
+        uv_run(*cmd)
+
+    elif args.command == 'server':
+        if args.action == 'start':
+            print("APIサーバーを起動します...")
+            subprocess.Popen(['uv', 'run', 'python', 'tts_api_server.py'], cwd=SCRIPT_DIR)
+        elif args.action == 'stop':
+            subprocess.run(['pkill', '-f', 'tts_api_server.py'])
+            print("APIサーバーを停止しました")
+        elif args.action == 'status':
+            result = subprocess.run(['pgrep', '-f', 'tts_api_server.py'], capture_output=True)
+            print("APIサーバーは起動中です" if result.returncode == 0 else "APIサーバーは停止しています")
+
+    elif args.command == 'engine':
+        uv_run('voicevox_manager.py', args.action)
+
+    elif args.command == 'list':
+        uv_run('-c', """
+import requests
+try:
+    response = requests.get('http://localhost:50021/speakers')
+    speakers = response.json()
+    print("利用可能な話者:")
+    for speaker in speakers[:10]:
+        print(f"\\n{speaker['name']}:")
+        for style in speaker['styles']:
+            print(f"  {style['id']}: {style['name']}")
+except Exception:
+    print("エラー: VOICEVOXエンジンに接続できません")
+    print("起動: vsay engine start")
+""")
+
+if __name__ == "__main__":
+    main()
